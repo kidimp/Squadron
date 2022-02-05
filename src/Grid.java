@@ -28,8 +28,9 @@ public class Grid {
     void render() {
         for (Ship ship : ships) {
             ship.shipRender(grid);
-            //grid[ship.getY_ShipCoordinate()][ship.getX_ShipCoordinate()] = DECK_UNDAMAGED;
+            ship.borderRender(grid);
         }
+
         for (int y = 0; y < GRID_SIZE_Y; y++) {
             for (int x = 0; x < GRID_SIZE_X; x++) {
                 System.out.print(grid[y][x] + "  ");
@@ -39,13 +40,16 @@ public class Grid {
         System.out.println();
     }
 
-        public Ship createShip(ShipType shipType, ShipOrientation shipOrientation, int x_ShipCoordinate, int y_ShipCoordinate) {
+    public Ship createShip(ShipType shipType, ShipOrientation shipOrientation, int x_ShipCoordinate, int y_ShipCoordinate) {
 
-            Ship ship = new Ship(shipType, shipOrientation, x_ShipCoordinate, y_ShipCoordinate);
-            ships.add(ship);
-            return ship;
+        Ship ship = new Ship(shipType, shipOrientation, x_ShipCoordinate, y_ShipCoordinate);
+        ships.add(ship);
+        return ship;
 
-        }
+    }
+
+
+
 
 }
 
