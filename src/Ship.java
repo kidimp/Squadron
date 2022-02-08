@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class Ship {
 
@@ -45,79 +44,39 @@ public class Ship {
 
     public void addBorders() {
 
+        int[] coordX = {-1, 0, 1, -1, 1, -1, 0, 1};
+        int[] coordY = {-1, -1, -1, 0, 0, 1, 1, 1};
+
         for (Deck deck : decks) {
-            int x = deck.getX_DeckCoordinate();
-            int y = deck.getY_DeckCoordinate();
+            for (int i = 0; i < 8; i++) {
+                int x_BorderCoordinate = deck.getX_DeckCoordinate() + coordX[i];
+                int y_BorderCoordinate = deck.getY_DeckCoordinate() + coordY[i];
+                boolean crossingBorderDeck = false;
+                boolean crossingBorderBorder = false;
 
-            if ((x == 0) && (y == 0)) {
-                borders.add(new Border(x + 1, y + 0));
-                borders.add(new Border(x + 1, y + 1));
-                borders.add(new Border(x + 0, y + 1));
-            }
-            if ((x == Grid.GRID_SIZE_X - 1) && (y == 0)) {
-                borders.add(new Border(x - 1, y + 0));
-                borders.add(new Border(x - 1, y + 1));
-                borders.add(new Border(x + 0, y + 1));
-            }
-            if ((x == Grid.GRID_SIZE_X - 1) && (y == Grid.GRID_SIZE_Y - 1)) {
-                borders.add(new Border(x - 1, y + 0));
-                borders.add(new Border(x - 1, y - 1));
-                borders.add(new Border(x + 0, y - 1));
-            }
-            if ((x == 0) && (y == Grid.GRID_SIZE_Y - 1)) {
-                borders.add(new Border(x + 0, y - 1));
-                borders.add(new Border(x + 1, y - 1));
-                borders.add(new Border(x + 1, y + 0));
-            }
-            if ((x >= 1) && (x <= Grid.GRID_SIZE_X - 2) && (y == 0)) {
-                borders.add(new Border(x - 1, y + 0));
-                borders.add(new Border(x - 1, y + 1));
-                borders.add(new Border(x + 0, y + 1));
-                borders.add(new Border(x + 1, y + 1));
-                borders.add(new Border(x + 1, y + 0));
-            }
-            if ((x == Grid.GRID_SIZE_X - 1) && (y <= Grid.GRID_SIZE_Y - 2) && (y >= 1)) {
-                borders.add(new Border(x + 0, y - 1));
-                borders.add(new Border(x - 1, y - 1));
-                borders.add(new Border(x - 1, y + 0));
-                borders.add(new Border(x - 1, y + 1));
-                borders.add(new Border(x + 0, y + 1));
-            }
-            if ((x >= 1) && (x <= Grid.GRID_SIZE_X - 2) && (y == Grid.GRID_SIZE_Y - 1)) {
-                borders.add(new Border(x - 1, y + 0));
-                borders.add(new Border(x - 1, y + 1));
-                borders.add(new Border(x + 0, y + 1));
-                borders.add(new Border(x + 1, y + 1));
-                borders.add(new Border(x + 1, y + 0));
-            }
-            if ((x == 0) && (y <= Grid.GRID_SIZE_Y - 2) && (y >= 1)) {
-                borders.add(new Border(x + 0, y - 1));
-                borders.add(new Border(x + 1, y - 1));
-                borders.add(new Border(x + 1, y + 0));
-                borders.add(new Border(x + 1, y + 1));
-                borders.add(new Border(x + 0, y + 1));
-            }
-            if ((x >= 1) && (x <= Grid.GRID_SIZE_X - 2) && (y <= Grid.GRID_SIZE_Y - 2) && (y >= 1)) {
-                borders.add(new Border(x - 1, y - 1));
-                borders.add(new Border(x + 0, y - 1));
-                borders.add(new Border(x + 1, y - 1));
-                borders.add(new Border(x - 1, y + 0));
-                borders.add(new Border(x + 1, y + 0));
-                borders.add(new Border(x - 1, y + 1));
-                borders.add(new Border(x + 0, y + 1));
-                borders.add(new Border(x + 1, y + 1));
-            }
-        }
+                for (Deck deckCheck : decks) {
+                    if (((deckCheck.getX_DeckCoordinate() == x_BorderCoordinate) && (deckCheck.getY_DeckCoordinate() == y_BorderCoordinate))) {
+                        crossingBorderBorder = true;
+                        break;
+                    }
+                }
 
-        for (int i = 0; i < borders.size(); i++) {
-            for (Deck deck : decks){
-                if ((borders.get(i).getX_BorderCoordinate() == deck.getX_DeckCoordinate()) &&
-                        (borders.get(i).getY_BorderCoordinate() == deck.getY_DeckCoordinate())) {
-                    borders.remove(i--);
-                    break;
+                for (Border borderCheck : borders) {
+                    if (((borderCheck.getX_BorderCoordinate() == x_BorderCoordinate) && (borderCheck.getY_BorderCoordinate() == y_BorderCoordinate))) {
+                        crossingBorderDeck = true;
+                        break;
+                    }
+                }
+
+                if ((crossingBorderDeck == false) && (crossingBorderBorder == false)) {
+                    if ((x_BorderCoordinate >= 0) && (y_BorderCoordinate >= 0) && (x_BorderCoordinate < Grid.GRID_SIZE_X) && (y_BorderCoordinate < Grid.GRID_SIZE_Y)) {
+                        borders.add(new Border(x_BorderCoordinate, y_BorderCoordinate));
+                    }
                 }
             }
         }
     }
+
+
 
 }

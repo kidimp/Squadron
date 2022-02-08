@@ -2,8 +2,8 @@ import java.util.ArrayList;
 
 public class Grid {
 
-    static final int GRID_SIZE_Y = 10;
     static final int GRID_SIZE_X = 10;
+    static final int GRID_SIZE_Y = 10;
 
     static final String EMPTY_CELL = "\u25fb";
     static final String DECK_UNDAMAGED = "\u25fc";
