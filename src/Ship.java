@@ -8,10 +8,7 @@ public class Ship {
     private ShipType shipType;
     ShipOrientation shipOrientation;
     int x_ShipCoordinate, y_ShipCoordinate;
-//    private boolean isSunk = false;
-
-//    public Ship() {
-//    }
+    private boolean isSunk = false;
 
     public Ship(ShipType shipType, ShipOrientation shipOrientation, int x_ShipCoordinate, int y_ShipCoordinate) {
         this.shipType = shipType;
@@ -40,6 +37,20 @@ public class Ship {
                     offsetY = i * ((shipOrientation == ShipOrientation.VERTICAL) ? 1 : 0);
             decks.add(new Deck(x_ShipCoordinate + offsetX, y_ShipCoordinate + offsetY));
         }
+    }
+
+    public boolean checkUncrossing(int x, int y){
+        for (Deck deck : decks){
+            if ((deck.getX_DeckCoordinate() == x) && (deck.getY_DeckCoordinate() == y)) {
+                return false;
+            }
+        }
+        for (Border border : borders){
+            if ((border.getX_BorderCoordinate() == x) && (border.getY_BorderCoordinate() == y)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public void addBorders() {

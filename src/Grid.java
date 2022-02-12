@@ -40,15 +40,16 @@ public class Grid {
         System.out.println();
     }
 
-    public Ship createShip(ShipType shipType, ShipOrientation shipOrientation, int x_ShipCoordinate, int y_ShipCoordinate) {
+    public void createShip(ShipType shipType, ShipOrientation shipOrientation, int x_ShipCoordinate, int y_ShipCoordinate) {
 
         Ship ship = new Ship(shipType, shipOrientation, x_ShipCoordinate, y_ShipCoordinate);
         ships.add(ship);
-        return ship;
-
     }
 
-
+    // For testing purposes only!!!
+    public void addShip(Ship ship) {
+        ships.add(ship);
+    }
 
 
 }
