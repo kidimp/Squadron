@@ -25,6 +25,7 @@ public class Grid {
                     {EMPTY_CELL, EMPTY_CELL, EMPTY_CELL, EMPTY_CELL, EMPTY_CELL, EMPTY_CELL, EMPTY_CELL, EMPTY_CELL, EMPTY_CELL, EMPTY_CELL},  //I
                     {EMPTY_CELL, EMPTY_CELL, EMPTY_CELL, EMPTY_CELL, EMPTY_CELL, EMPTY_CELL, EMPTY_CELL, EMPTY_CELL, EMPTY_CELL, EMPTY_CELL}}; //J
 
+
     void render() {
         for (Ship ship : ships) {
             ship.shipRender(grid);
@@ -40,18 +41,43 @@ public class Grid {
         System.out.println();
     }
 
+
     public void createShip(ShipType shipType, ShipOrientation shipOrientation, int x_ShipCoordinate, int y_ShipCoordinate) {
 
         Ship ship = new Ship(shipType, shipOrientation, x_ShipCoordinate, y_ShipCoordinate);
         ships.add(ship);
     }
 
-    // For testing purposes only!!!
+
+    public boolean isPossibleToPlace(ShipType shipType, ShipOrientation shipOrientation, int x, int y) {
+        int amountOfDecks = shipType.ordinal() + 1;
+        if ((shipOrientation.equals(ShipOrientation.VERTICAL) && (y > Grid.GRID_SIZE_Y - amountOfDecks))
+                || (shipOrientation.equals(ShipOrientation.HORIZONTAL) && (x > Grid.GRID_SIZE_X - amountOfDecks))) {
+            return false;
+        }
+
+        for (int i = 0; i < amountOfDecks; i++) {
+            int offsetX = i * ((shipOrientation == ShipOrientation.HORIZONTAL) ? 1 : 0),
+                    offsetY = i * ((shipOrientation == ShipOrientation.VERTICAL) ? 1 : 0);
+            for (Ship ship : ships) {
+                if (ship.checkUncrossing(x + offsetX, y + offsetY) == false) {
+                    return false;
+                }
+
+            }
+        }
+        return true;
+    }
+
+
     public void addShip(Ship ship) {
         ships.add(ship);
     }
 
 
+    public void clearShips(){
+        ships.clear();
+    }
 }
 
 

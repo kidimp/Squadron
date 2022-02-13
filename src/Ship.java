@@ -10,6 +10,7 @@ public class Ship {
     int x_ShipCoordinate, y_ShipCoordinate;
     private boolean isSunk = false;
 
+
     public Ship(ShipType shipType, ShipOrientation shipOrientation, int x_ShipCoordinate, int y_ShipCoordinate) {
         this.shipType = shipType;
         this.shipOrientation = shipOrientation;
@@ -19,17 +20,20 @@ public class Ship {
         addBorders();
     }
 
+
     public void shipRender(String[][] grid) {
         for (Deck deck : decks) {
             grid[deck.y_DeckCoordinate][deck.x_DeckCoordinate] = Grid.DECK_UNDAMAGED;
         }
     }
 
+
     public void borderRender(String[][] grid) {
         for (Border border : borders) {
             grid[border.y_BorderCoordinate][border.x_BorderCoordinate] = Grid.MISS_SHOT;
         }
     }
+
 
     public void addDecks() {
         for (int i = 0; i <= shipType.ordinal(); i++) {
@@ -38,6 +42,7 @@ public class Ship {
             decks.add(new Deck(x_ShipCoordinate + offsetX, y_ShipCoordinate + offsetY));
         }
     }
+
 
     public boolean checkUncrossing(int x, int y){
         for (Deck deck : decks){
@@ -53,8 +58,8 @@ public class Ship {
         return true;
     }
 
-    public void addBorders() {
 
+    public void addBorders() {
         int[] coordX = {-1, 0, 1, -1, 1, -1, 0, 1};
         int[] coordY = {-1, -1, -1, 0, 0, 1, 1, 1};
 
@@ -87,7 +92,5 @@ public class Ship {
             }
         }
     }
-
-
 
 }

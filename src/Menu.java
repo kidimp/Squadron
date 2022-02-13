@@ -3,60 +3,108 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class Menu {
+    public static final int MANUAL_PLACING_METHOD = 1;
+    public static final int AUTO_PLACING_METHOD = 0;
+    public static final int VERTICAL_SHIP_ORIENTATION = 1;
+    public static final int HORIZONTAL_SHIP_ORIENTATION = 0;
 
-    static void message() throws IOException {
+    static BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
 
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
 
+    static void initialMessage() {
         System.out.println("Menu message: this game has started.");
-//        System.out.println("EMPTY_CELL - " + Grid.EMPTY_CELL);
-//        System.out.println("DECK_UNDAMAGED - " + Grid.DECK_UNDAMAGED);
-//        System.out.println("DECK_DAMAGED - " + Grid.DECK_DAMAGED);
-//        System.out.println("MISS_SHOT - " + Grid.MISS_SHOT);
+    }
 
+
+    static int getPlacingMethod() {
         System.out.println("To place ships manually press \"M\"");
         System.out.println("To place ships automatically press \"A\"");
 
-        String humanChoice = bufferedReader.readLine();
+        String humanChoice = null;
+        try {
+            humanChoice = bufferedReader.readLine();
+        } catch (IOException e) {
+            System.out.println("Error");
+        }
 
         switch (humanChoice) {
-            case ("M"), ("m") -> System.out.println("Ships are placed manually.");
-            case ("A"), ("a") -> System.out.println("Ships are placed automatically.");
+            case ("M"), ("m") -> {
+                System.out.println("Ships are placing manually.");
+                return MANUAL_PLACING_METHOD;
+            }
+            case ("A"), ("a") -> {
+                System.out.println("Ships are placed automatically.");
+                return AUTO_PLACING_METHOD;
+            }
             default -> throw new IllegalStateException("Unexpected value: " + humanChoice);
         }
-        System.out.println("For placing a ship enter it orientation (V for vertical, H for horizontal) and coordinates (X - from 1 to 10, Y - from A to J).");
+    }
 
-        Grid grid = new Grid();
 
-        System.out.println("Place one FOURDECKER.");
+    static int getOrientation() throws IOException {
+        String humanChoiceOrientation;
 
         System.out.print("Orientation = ");
-        String humanChoiceOrientation = bufferedReader.readLine();
+        humanChoiceOrientation = bufferedReader.readLine();
+        switch (humanChoiceOrientation) {
+            case ("V"), ("v") -> {
+                return VERTICAL_SHIP_ORIENTATION;
+            }
+            case ("H"), ("h") -> {
+                return HORIZONTAL_SHIP_ORIENTATION;
+            }
+            default -> throw new IllegalStateException("Unexpected value: " + humanChoiceOrientation);
+        }
+    }
+
+
+    static int getCoordX() throws IOException {
         System.out.print("X = ");
-        int humanChoiceX = Integer.parseInt(bufferedReader.readLine()) - 1;
+        return Integer.parseInt(bufferedReader.readLine()) - 1;
+    }
+
+
+    static int getCoordY() throws IOException {
         System.out.print("Y = ");
         String strHumanChoiceY = bufferedReader.readLine();
-        int humanChoiceY;
         switch (strHumanChoiceY) {
-            case ("A"), ("a") -> humanChoiceY = 0;
-            case ("B"), ("b") -> humanChoiceY = 1;
-            case ("C"), ("c") -> humanChoiceY = 2;
-            case ("D"), ("d") -> humanChoiceY = 3;
-            case ("E"), ("e") -> humanChoiceY = 4;
-            case ("F"), ("f") -> humanChoiceY = 5;
-            case ("G"), ("g") -> humanChoiceY = 6;
-            case ("H"), ("h") -> humanChoiceY = 7;
-            case ("I"), ("i") -> humanChoiceY = 8;
-            case ("J"), ("j") -> humanChoiceY = 9;
-            default -> throw new IllegalStateException("Unexpected value: " + humanChoice);
+            case ("A"), ("a") -> {
+                return 0;
+            }
+            case ("B"), ("b") -> {
+                return 1;
+            }
+            case ("C"), ("c") -> {
+                return 2;
+            }
+            case ("D"), ("d") -> {
+                return 3;
+            }
+            case ("E"), ("e") -> {
+                return 4;
+            }
+            case ("F"), ("f") -> {
+                return 5;
+            }
+            case ("G"), ("g") -> {
+                return 6;
+            }
+            case ("H"), ("h") -> {
+                return 7;
+            }
+            case ("I"), ("i") -> {
+                return 8;
+            }
+            case ("J"), ("j") -> {
+                return 9;
+            }
+            default -> throw new IllegalStateException("Unexpected value: " + strHumanChoiceY);
         }
-        System.out.println("check1");
-        switch (humanChoiceOrientation) {
-            case ("V"), ("v") -> grid.createShip(ShipType.FOURDECKER, ShipOrientation.VERTICAL, humanChoiceX, humanChoiceY);
-            case ("H"), ("h") -> grid.createShip(ShipType.FOURDECKER, ShipOrientation.HORIZONTAL, humanChoiceX, humanChoiceY);
-            default -> throw new IllegalStateException("Unexpected value: " + humanChoice);
-        }
-        grid.render();
+    }
 
+
+    public static void placingRulesMessage() {
+        System.out.println("For placing a ship enter it orientation (V for vertical, H for horizontal) " +
+                "and coordinates (X - from 1 to 10, Y - from A to J).");
     }
 }
