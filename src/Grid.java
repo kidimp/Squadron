@@ -29,7 +29,7 @@ public class Grid {
     void render() {
         for (Ship ship : ships) {
             ship.shipRender(grid);
-            ship.borderRender(grid);
+//            ship.borderRender(grid);
         }
 
         for (int y = 0; y < GRID_SIZE_Y; y++) {
@@ -43,7 +43,6 @@ public class Grid {
 
 
     public void createShip(ShipType shipType, ShipOrientation shipOrientation, int x_ShipCoordinate, int y_ShipCoordinate) {
-
         Ship ship = new Ship(shipType, shipOrientation, x_ShipCoordinate, y_ShipCoordinate);
         ships.add(ship);
     }
@@ -75,8 +74,21 @@ public class Grid {
     }
 
 
-    public void clearShips(){
+    public void clearShips() {
         ships.clear();
+    }
+
+
+    public void makeShot(int x, int y) {
+        boolean isHit = false;
+
+        for (Ship ship : ships) {
+            isHit = ship.isHit(x, y);
+        }
+
+        if (isHit == false) {
+            grid[y][x] = MISS_SHOT;
+        }
     }
 }
 

@@ -8,7 +8,7 @@ public class Ship {
     private ShipType shipType;
     ShipOrientation shipOrientation;
     int x_ShipCoordinate, y_ShipCoordinate;
-    private boolean isSunk = false;
+    boolean isSunk = false;
 
 
     public Ship(ShipType shipType, ShipOrientation shipOrientation, int x_ShipCoordinate, int y_ShipCoordinate) {
@@ -23,7 +23,11 @@ public class Ship {
 
     public void shipRender(String[][] grid) {
         for (Deck deck : decks) {
-            grid[deck.y_DeckCoordinate][deck.x_DeckCoordinate] = Grid.DECK_UNDAMAGED;
+            if (deck.isDamaged == true) {
+                grid[deck.y_DeckCoordinate][deck.x_DeckCoordinate] = Grid.DECK_DAMAGED;
+            } else {
+                grid[deck.y_DeckCoordinate][deck.x_DeckCoordinate] = Grid.DECK_UNDAMAGED;
+            }
         }
     }
 
@@ -91,6 +95,28 @@ public class Ship {
                 }
             }
         }
+    }
+
+
+    public boolean isHit(int x, int y) {
+        for (Deck deck : decks) {
+            if ((x == deck.getX_DeckCoordinate()) && (y == deck.getY_DeckCoordinate())){
+                deck.setDamage();
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+    public boolean isSunk() {
+        for (Deck deck : decks) {
+            if (deck.isDamaged == false) {
+                return false;
+            }
+        }
+        isSunk = true;
+        return true;
     }
 
 }

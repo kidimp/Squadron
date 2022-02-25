@@ -16,6 +16,11 @@ public class Menu {
     }
 
 
+    static void endOfTheGameMessage() {
+        System.out.println("End of the game.");
+    }
+
+
     static int getPlacingMethod() {
         System.out.println("To place ships manually press \"M\"");
         System.out.println("To place ships automatically press \"A\"");
@@ -106,5 +111,10 @@ public class Menu {
     public static void placingRulesMessage() {
         System.out.println("For placing a ship enter it orientation (V for vertical, H for horizontal) " +
                 "and coordinates (X - from 1 to 10, Y - from A to J).");
+    }
+
+
+    public static void currentOpponentGrid() {
+        System.out.println("This is a current opponent's grid. \nTake your shot.");
     }
 }

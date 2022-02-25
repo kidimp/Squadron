@@ -12,4 +12,21 @@ public class Game {
         aiPlayer.shipPlacement();
         humanPlayer.shipPlacement();
     }
+
+
+    public void shot(int x, int y) {
+        gridAIPlayer.makeShot(x, y);
+        gridAIPlayer.render();
+    }
+
+
+    public boolean isEndOfGame() {
+        for (Ship ship : gridAIPlayer.ships) {
+            if (ship.isSunk() == false) {
+                return false;
+            }
+        }
+        return true;
+    }
+
 }

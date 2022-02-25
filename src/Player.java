@@ -29,9 +29,8 @@ public abstract class Player {
 
     public void shipSetting(ShipType shipType) {
         int counterOfFails = 0;
-        ShipOrientation shipOrientation = null;
-        int x = 0;
-        int y = 0;
+        ShipOrientation shipOrientation;
+        int x, y;
 
         do {
             x = getRandomStartCell(Grid.GRID_SIZE_X);

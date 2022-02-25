@@ -18,4 +18,8 @@ public class Deck {
         return y_DeckCoordinate;
     }
 
+    public void setDamage() {
+        isDamaged = true;
+    }
+
 }
