@@ -15,7 +15,7 @@ public class HumanPlayer extends Player {
             }
             case (Menu.AUTO_PLACING_METHOD) -> {
                 allShipPlacementGeneration();
-                grid.render();
+                grid.render(true);
             }
         }
     }
@@ -60,7 +60,7 @@ public class HumanPlayer extends Player {
         try {
             for (ShipType shipWithType : allShipsWithTypes) {
                 shipPlacement(shipWithType);
-                grid.render();
+                grid.render(true);
             }
         } catch (IOException e) {
             System.out.println("Error");

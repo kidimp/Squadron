@@ -26,9 +26,9 @@ public class Grid {
                     {EMPTY_CELL, EMPTY_CELL, EMPTY_CELL, EMPTY_CELL, EMPTY_CELL, EMPTY_CELL, EMPTY_CELL, EMPTY_CELL, EMPTY_CELL, EMPTY_CELL}}; //J
 
 
-    void render() {
+    void render(boolean isShowShips) {
         for (Ship ship : ships) {
-            ship.shipRender(grid);
+            ship.shipRender(grid, isShowShips);
 //            ship.borderRender(grid);
         }
 
@@ -59,7 +59,7 @@ public class Grid {
             int offsetX = i * ((shipOrientation == ShipOrientation.HORIZONTAL) ? 1 : 0),
                     offsetY = i * ((shipOrientation == ShipOrientation.VERTICAL) ? 1 : 0);
             for (Ship ship : ships) {
-                if (ship.checkUncrossing(x + offsetX, y + offsetY) == false) {
+                if (!ship.checkUncrossing(x + offsetX, y + offsetY)) {
                     return false;
                 }
 
@@ -79,6 +79,15 @@ public class Grid {
     }
 
 
+    public boolean isShotDuplicated(int x, int y){
+        if (grid[y][x].equals(MISS_SHOT) || grid[y][x].equals(DECK_DAMAGED)){
+            System.out.println("You have already shoot at these coordinates. Try another one.");
+            return true;
+        }
+        return false;
+    }
+
+
     public void makeShot(int x, int y) {
         boolean isHit = false;
 
@@ -86,7 +95,7 @@ public class Grid {
             isHit = ship.isHit(x, y);
         }
 
-        if (isHit == false) {
+        if (!isHit) {
             grid[y][x] = MISS_SHOT;
         }
     }

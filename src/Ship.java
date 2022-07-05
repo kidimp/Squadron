@@ -21,12 +21,14 @@ public class Ship {
     }
 
 
-    public void shipRender(String[][] grid) {
+    public void shipRender(String[][] grid, boolean isShowShips) {
         for (Deck deck : decks) {
-            if (deck.isDamaged == true) {
+            if (deck.isDamaged) {
                 grid[deck.y_DeckCoordinate][deck.x_DeckCoordinate] = Grid.DECK_DAMAGED;
             } else {
-                grid[deck.y_DeckCoordinate][deck.x_DeckCoordinate] = Grid.DECK_UNDAMAGED;
+                if (isShowShips) {
+                    grid[deck.y_DeckCoordinate][deck.x_DeckCoordinate] = Grid.DECK_UNDAMAGED;
+                }
             }
         }
     }

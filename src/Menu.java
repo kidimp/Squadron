@@ -117,4 +117,18 @@ public class Menu {
     public static void currentOpponentGrid() {
         System.out.println("This is a current opponent's grid. \nTake your shot.");
     }
+
+    public static void aiShootingProcedure() {
+        try {
+            Thread.sleep(350);
+        System.out.print("AI Player shooting");
+        for (int i = 0; i < 10; i++) {
+            Thread.sleep(250);
+            System.out.print(".");
+        }
+            System.out.println();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

@@ -28,7 +28,7 @@ public abstract class Player {
 
 
     public void shipSetting(ShipType shipType) {
-        int counterOfFails = 0;
+        int counterOfAttemptsToSetShip = 0;
         ShipOrientation shipOrientation;
         int x, y;
 
@@ -37,8 +37,8 @@ public abstract class Player {
             y = getRandomStartCell(Grid.GRID_SIZE_Y);
             shipOrientation = getRandomOrientation();
 
-            counterOfFails++;
-            if (counterOfFails == MAX_AMOUNT_OF_ITERATIONS) {
+            counterOfAttemptsToSetShip++;
+            if (counterOfAttemptsToSetShip == MAX_AMOUNT_OF_ITERATIONS) {
                 shipPlacementReset();
                 return;
             }

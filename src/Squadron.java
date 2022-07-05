@@ -8,13 +8,20 @@ public class Squadron {
         Game game = new Game();
         game.start();
 
-        while (game.isEndOfGame() == false){
-            System.out.println("Take your shot.");
-            int x = Menu.getCoordX();
-            int y = Menu.getCoordY();
+        while (!game.isEndOfGame()) {
+            int x, y;
+            if (game.playerTypeTurn == PlayerType.HUMAN) {
+                System.out.println("Take your shot.");
+                x = Menu.getCoordX();
+                y = Menu.getCoordY();
+            } else {
+                x = (int) (Math.random() * Grid.GRID_SIZE_X);
+                y = (int) (Math.random() * Grid.GRID_SIZE_Y);
+            }
             game.shot(x, y);
         }
 
+        Menu.endOfTheGameMessage();
 
     }
 }
