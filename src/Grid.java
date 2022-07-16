@@ -12,9 +12,12 @@ public class Grid {
 
     ArrayList<Ship> ships = new ArrayList<>();
 
+    ShotStatus shotStatus;
+
+
     String[][] grid =
 //                   1           2           3           4           5           6           7           8           9           10
-                   {{EMPTY_CELL, EMPTY_CELL, EMPTY_CELL, EMPTY_CELL, EMPTY_CELL, EMPTY_CELL, EMPTY_CELL, EMPTY_CELL, EMPTY_CELL, EMPTY_CELL},  //A
+            {{EMPTY_CELL, EMPTY_CELL, EMPTY_CELL, EMPTY_CELL, EMPTY_CELL, EMPTY_CELL, EMPTY_CELL, EMPTY_CELL, EMPTY_CELL, EMPTY_CELL},  //A
                     {EMPTY_CELL, EMPTY_CELL, EMPTY_CELL, EMPTY_CELL, EMPTY_CELL, EMPTY_CELL, EMPTY_CELL, EMPTY_CELL, EMPTY_CELL, EMPTY_CELL},  //B
                     {EMPTY_CELL, EMPTY_CELL, EMPTY_CELL, EMPTY_CELL, EMPTY_CELL, EMPTY_CELL, EMPTY_CELL, EMPTY_CELL, EMPTY_CELL, EMPTY_CELL},  //C
                     {EMPTY_CELL, EMPTY_CELL, EMPTY_CELL, EMPTY_CELL, EMPTY_CELL, EMPTY_CELL, EMPTY_CELL, EMPTY_CELL, EMPTY_CELL, EMPTY_CELL},  //D
@@ -27,6 +30,7 @@ public class Grid {
 
 
     void render(boolean isShowShips) {
+        System.out.println("1  2  3  4  5  6  7  8  9  10");
         for (Ship ship : ships) {
             ship.shipRender(grid, isShowShips);
 //            ship.borderRender(grid);
@@ -36,7 +40,7 @@ public class Grid {
             for (int x = 0; x < GRID_SIZE_X; x++) {
                 System.out.print(grid[y][x] + "  ");
             }
-            System.out.println();
+            Menu.printLetterCoordinate(y);
         }
         System.out.println();
     }
@@ -79,26 +83,40 @@ public class Grid {
     }
 
 
-    public boolean isShotDuplicated(int x, int y){
-        if (grid[y][x].equals(MISS_SHOT) || grid[y][x].equals(DECK_DAMAGED)){
-            System.out.println("You have already shoot at these coordinates. Try another one.");
-            return true;
-        }
-        return false;
+    public boolean isPossibleToShoot(int x, int y) {
+        return (x >= 0 && x <= 9) && (y >= 0 && y <= 9);
+    }
+
+
+    public boolean isShotDuplicated(int x, int y) {
+        return grid[y][x].equals(MISS_SHOT) || grid[y][x].equals(DECK_DAMAGED);
     }
 
 
     public void makeShot(int x, int y) {
-        boolean isHit = false;
+        shotStatus = ShotStatus.MISSED;
 
         for (Ship ship : ships) {
-            isHit = ship.isHit(x, y);
+            if (ship.isHit(x, y)) {
+                shotStatus = ShotStatus.DAMAGED;
+                if (ship.isSunk()) {
+                    shotStatus = ShotStatus.SUNK;
+                    ship.borderRender(grid);
+                }
+                break;
+            }
         }
 
-        if (!isHit) {
+        if (shotStatus == ShotStatus.MISSED) {
             grid[y][x] = MISS_SHOT;
         }
     }
+
+
+    public ShotStatus getShotStatus() {
+        return shotStatus;
+    }
+
 }
 
 

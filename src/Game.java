@@ -11,6 +11,9 @@ public class Game {
         aiPlayer = new AIPlayer(gridAIPlayer);
         humanPlayer = new HumanPlayer(gridHumanPlayer);
 
+        aiPlayer.opponentPlayer = humanPlayer;
+        humanPlayer.opponentPlayer = aiPlayer;
+
         aiPlayer.shipPlacement();
         humanPlayer.shipPlacement();
 
@@ -20,41 +23,57 @@ public class Game {
 
     public void shot(int x, int y) {
         Grid grid = (playerTypeTurn == PlayerType.HUMAN) ? gridAIPlayer : gridHumanPlayer;
-        if (!grid.isShotDuplicated(x, y)) {
-            grid.makeShot(x, y);
-            renderGrids();
-            changeTurn();
-        }
-    }
-
-
-    public void changeTurn() {
-        if (playerTypeTurn == PlayerType.HUMAN) {
-            playerTypeTurn = PlayerType.AI;
+        if (grid.isPossibleToShoot(x, y)) {
+            if (!grid.isShotDuplicated(x, y)) {
+                grid.makeShot(x, y);
+                renderGrids(x, y);
+                // Если игрок промахнулся, то передаём ход
+                if (grid.getShotStatus() == ShotStatus.MISSED) {
+                    changeTurn();
+                }
+            } else {
+                if (playerTypeTurn == PlayerType.HUMAN) {
+                    Menu.duplicateShotMessage();
+                }
+            }
         } else {
-            playerTypeTurn = PlayerType.HUMAN;
-        }
-    }
-
-
-    public boolean isEndOfGame() {
-        for (Ship ship : gridAIPlayer.ships) {
-            if (!ship.isSunk()) {
-                return false;
+            if (playerTypeTurn == PlayerType.HUMAN) {
+                Menu.outOfBattlefieldShotMessage();
             }
         }
-        return true;
     }
 
 
-    public void renderGrids() {
-        if (playerTypeTurn == PlayerType.HUMAN) {
-            System.out.println("AIPlayer grid");
-            gridAIPlayer.render(false);
-        } else {
-            Menu.aiShootingProcedure();
-            System.out.println("HumanPlayer grid");
-            gridHumanPlayer.render(true);
+        public void changeTurn () {
+            if (playerTypeTurn == PlayerType.HUMAN) {
+                playerTypeTurn = PlayerType.AI;
+            } else {
+                playerTypeTurn = PlayerType.HUMAN;
+            }
+        }
+
+
+        public boolean isEndOfGame () {
+            Grid grid = (playerTypeTurn == PlayerType.HUMAN) ? gridAIPlayer : gridHumanPlayer;
+            for (Ship ship : grid.ships) {
+                if (!ship.isSunk()) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+
+        public void renderGrids ( int x, int y){
+            if (playerTypeTurn == PlayerType.HUMAN) {
+                System.out.println("AI player grid");
+                gridAIPlayer.render(false);
+            } else {
+                Menu.aiShootingProcedure();
+                System.out.print("AI player shot at X = " + (x + 1) + "  Y =");
+                Menu.printLetterCoordinate(y);
+                System.out.println("Human player grid");
+                gridHumanPlayer.render(true);
+            }
         }
     }
-}

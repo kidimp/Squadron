@@ -9,19 +9,15 @@ public class Squadron {
         game.start();
 
         while (!game.isEndOfGame()) {
-            int x, y;
-            if (game.playerTypeTurn == PlayerType.HUMAN) {
-                System.out.println("Take your shot.");
-                x = Menu.getCoordX();
-                y = Menu.getCoordY();
-            } else {
-                x = (int) (Math.random() * Grid.GRID_SIZE_X);
-                y = (int) (Math.random() * Grid.GRID_SIZE_Y);
-            }
+            Player currentPlayer = (game.playerTypeTurn == PlayerType.HUMAN) ? game.humanPlayer : game.aiPlayer;
+
+            int[] currentPlayerShotCoordinates = currentPlayer.getShotCoordinates();
+            int x = currentPlayerShotCoordinates[0];
+            int y = currentPlayerShotCoordinates[1];
+
             game.shot(x, y);
         }
 
         Menu.endOfTheGameMessage();
-
     }
 }

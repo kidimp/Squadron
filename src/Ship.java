@@ -1,7 +1,6 @@
 import java.util.ArrayList;
 
 public class Ship {
-
     ArrayList<Deck> decks = new ArrayList<>();
     ArrayList<Border> borders = new ArrayList<>();
 
@@ -50,13 +49,13 @@ public class Ship {
     }
 
 
-    public boolean checkUncrossing(int x, int y){
-        for (Deck deck : decks){
+    public boolean checkUncrossing(int x, int y) {
+        for (Deck deck : decks) {
             if ((deck.getX_DeckCoordinate() == x) && (deck.getY_DeckCoordinate() == y)) {
                 return false;
             }
         }
-        for (Border border : borders){
+        for (Border border : borders) {
             if ((border.getX_BorderCoordinate() == x) && (border.getY_BorderCoordinate() == y)) {
                 return false;
             }
@@ -66,13 +65,13 @@ public class Ship {
 
 
     public void addBorders() {
-        int[] coordX = {-1, 0, 1, -1, 1, -1, 0, 1};
-        int[] coordY = {-1, -1, -1, 0, 0, 1, 1, 1};
+        int[] offset_X = {-1, 0, 1, -1, 1, -1, 0, 1};
+        int[] offset_Y = {-1, -1, -1, 0, 0, 1, 1, 1};
 
         for (Deck deck : decks) {
             for (int i = 0; i < 8; i++) {
-                int x_BorderCoordinate = deck.getX_DeckCoordinate() + coordX[i];
-                int y_BorderCoordinate = deck.getY_DeckCoordinate() + coordY[i];
+                int x_BorderCoordinate = deck.getX_DeckCoordinate() + offset_X[i];
+                int y_BorderCoordinate = deck.getY_DeckCoordinate() + offset_Y[i];
                 boolean crossingBorderDeck = false;
                 boolean crossingBorderBorder = false;
 
@@ -90,7 +89,7 @@ public class Ship {
                     }
                 }
 
-                if ((crossingBorderDeck == false) && (crossingBorderBorder == false)) {
+                if ((!crossingBorderDeck) && (!crossingBorderBorder)) {
                     if ((x_BorderCoordinate >= 0) && (y_BorderCoordinate >= 0) && (x_BorderCoordinate < Grid.GRID_SIZE_X) && (y_BorderCoordinate < Grid.GRID_SIZE_Y)) {
                         borders.add(new Border(x_BorderCoordinate, y_BorderCoordinate));
                     }
@@ -100,9 +99,19 @@ public class Ship {
     }
 
 
+    public void setBorders(int x, int y, String[][] grid) {
+        int[] offset_X = {-1, 1, -1, 1};
+        int[] offset_Y = {-1, -1, 1, 1};
+        for (int i = 0; i < 4; i++) {
+//            borders.add(new Border(x - offset_X[i], y - offset_Y[i]));
+            grid[x - offset_X[i]][y - offset_Y[i]] = Grid.MISS_SHOT;
+        }
+    }
+
+
     public boolean isHit(int x, int y) {
         for (Deck deck : decks) {
-            if ((x == deck.getX_DeckCoordinate()) && (y == deck.getY_DeckCoordinate())){
+            if ((x == deck.getX_DeckCoordinate()) && (y == deck.getY_DeckCoordinate())) {
                 deck.setDamage();
                 return true;
             }
@@ -113,12 +122,11 @@ public class Ship {
 
     public boolean isSunk() {
         for (Deck deck : decks) {
-            if (deck.isDamaged == false) {
+            if (!deck.isDamaged) {
                 return false;
             }
         }
         isSunk = true;
         return true;
     }
-
 }

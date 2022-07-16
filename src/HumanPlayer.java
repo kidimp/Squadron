@@ -8,6 +8,18 @@ public class HumanPlayer extends Player {
     }
 
 
+    @Override
+    public int[] getShotCoordinates() throws IOException {
+        int[] humanShotCoordinates = new int[2];
+
+        System.out.println("Take your shot. (X - from 1 to 10, Y - from A to J)");
+        humanShotCoordinates[0] = Menu.getCoordinate_X();
+        humanShotCoordinates[1] = Menu.getCoordinate_Y();
+
+        return humanShotCoordinates;
+    }
+
+
     public void shipPlacement() {
         switch (Menu.getPlacingMethod()) {
             case (Menu.MANUAL_PLACING_METHOD) -> {
@@ -32,8 +44,8 @@ public class HumanPlayer extends Player {
                 humanChoiceOrientation = Menu.getOrientation();
             }
 
-            humanChoiceX = Menu.getCoordX();
-            humanChoiceY = Menu.getCoordY();
+            humanChoiceX = Menu.getCoordinate_X();
+            humanChoiceY = Menu.getCoordinate_Y();
 
             shipOrientation = (humanChoiceOrientation == Menu.VERTICAL_SHIP_ORIENTATION) ? ShipOrientation.VERTICAL : ShipOrientation.HORIZONTAL;
 

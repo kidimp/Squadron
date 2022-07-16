@@ -1,6 +1,7 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Objects;
 
 public class Menu {
     public static final int MANUAL_PLACING_METHOD = 1;
@@ -22,8 +23,8 @@ public class Menu {
 
 
     static int getPlacingMethod() {
-        System.out.println("To place ships manually press \"M\"");
-        System.out.println("To place ships automatically press \"A\"");
+        System.out.println("To place human ships manually press \"M\"");
+        System.out.println("To place human ships automatically press \"A\"");
 
         String humanChoice = null;
         try {
@@ -32,7 +33,7 @@ public class Menu {
             System.out.println("Error");
         }
 
-        switch (humanChoice) {
+        switch (Objects.requireNonNull(humanChoice)) {
             case ("M"), ("m") -> {
                 System.out.println("Ships are placing manually.");
                 return MANUAL_PLACING_METHOD;
@@ -63,13 +64,13 @@ public class Menu {
     }
 
 
-    static int getCoordX() throws IOException {
+    static int getCoordinate_X() throws IOException {
         System.out.print("X = ");
         return Integer.parseInt(bufferedReader.readLine()) - 1;
     }
 
 
-    static int getCoordY() throws IOException {
+    static int getCoordinate_Y() throws IOException {
         System.out.print("Y = ");
         String strHumanChoiceY = bufferedReader.readLine();
         switch (strHumanChoiceY) {
@@ -103,7 +104,10 @@ public class Menu {
             case ("J"), ("j") -> {
                 return 9;
             }
-            default -> throw new IllegalStateException("Unexpected value: " + strHumanChoiceY);
+            default -> {
+                System.out.println("Unexpected value. Please, enter valid Y coordinate from A to J.");
+                throw new IllegalStateException("Unexpected value: " + strHumanChoiceY);
+            }
         }
     }
 
@@ -118,17 +122,44 @@ public class Menu {
         System.out.println("This is a current opponent's grid. \nTake your shot.");
     }
 
+
+    public static void duplicateShotMessage() {
+        System.out.println("You have already shoot at these coordinates. Try another one.");
+    }
+
+
+    public static void outOfBattlefieldShotMessage() {
+        System.out.println("You shoot out of battlefield. Try another coordinates.");
+    }
+
+
     public static void aiShootingProcedure() {
         try {
             Thread.sleep(350);
-        System.out.print("AI Player shooting");
-        for (int i = 0; i < 10; i++) {
-            Thread.sleep(250);
-            System.out.print(".");
-        }
+            System.out.print("AI player shooting");
+            for (int i = 0; i < 8; i++) {
+                Thread.sleep(250);
+                System.out.print(".");
+            }
             System.out.println();
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+
+    public static void printLetterCoordinate(int i) {
+        switch (i) {
+            case 0 -> System.out.println(" a");
+            case 1 -> System.out.println(" b");
+            case 2 -> System.out.println(" c");
+            case 3 -> System.out.println(" d");
+            case 4 -> System.out.println(" e");
+            case 5 -> System.out.println(" f");
+            case 6 -> System.out.println(" g");
+            case 7 -> System.out.println(" h");
+            case 8 -> System.out.println(" i");
+            case 9 -> System.out.println(" j");
         }
     }
 }

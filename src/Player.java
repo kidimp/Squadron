@@ -1,8 +1,11 @@
+import java.io.IOException;
 import java.util.Random;
 
 public abstract class Player {
     protected Grid grid;
     private final int MAX_AMOUNT_OF_ITERATIONS = 50;
+
+    protected Player opponentPlayer;
 
 
     public Player(Grid grid){
@@ -11,6 +14,9 @@ public abstract class Player {
 
 
     public abstract void shipPlacement();
+
+
+    public abstract int[] getShotCoordinates() throws IOException;
 
 
     public void allShipPlacementGeneration() {
