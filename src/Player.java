@@ -3,7 +3,6 @@ import java.util.Random;
 
 public abstract class Player {
     protected Grid grid;
-    private final int MAX_AMOUNT_OF_ITERATIONS = 50;
 
     protected Player opponentPlayer;
 
@@ -44,6 +43,7 @@ public abstract class Player {
             shipOrientation = getRandomOrientation();
 
             counterOfAttemptsToSetShip++;
+            final int MAX_AMOUNT_OF_ITERATIONS = 50;
             if (counterOfAttemptsToSetShip == MAX_AMOUNT_OF_ITERATIONS) {
                 shipPlacementReset();
                 return;

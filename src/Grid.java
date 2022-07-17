@@ -33,7 +33,6 @@ public class Grid {
         System.out.println("1  2  3  4  5  6  7  8  9  10");
         for (Ship ship : ships) {
             ship.shipRender(grid, isShowShips);
-//            ship.borderRender(grid);
         }
 
         for (int y = 0; y < GRID_SIZE_Y; y++) {

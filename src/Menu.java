@@ -28,9 +28,18 @@ public class Menu {
 
         String humanChoice = null;
         try {
-            humanChoice = bufferedReader.readLine();
+            while ((!Objects.equals(humanChoice, "a")) && (!Objects.equals(humanChoice, "A"))
+                    && (!Objects.equals(humanChoice, "m")) && (!Objects.equals(humanChoice, "M"))) {
+
+                humanChoice = bufferedReader.readLine().trim();
+
+                if ((!Objects.equals(humanChoice, "a")) && (!Objects.equals(humanChoice, "A"))
+                        && (!Objects.equals(humanChoice, "m")) && (!Objects.equals(humanChoice, "M"))) {
+                    System.out.println("Choose correct placing method.");
+                }
+            }
         } catch (IOException e) {
-            System.out.println("Error");
+            System.out.println("Error: Menu.getPlacingMethod()");
         }
 
         switch (Objects.requireNonNull(humanChoice)) {
@@ -47,12 +56,26 @@ public class Menu {
     }
 
 
-    static int getOrientation() throws IOException {
-        String humanChoiceOrientation;
-
+    static int getOrientation() {
         System.out.print("Orientation = ");
-        humanChoiceOrientation = bufferedReader.readLine();
-        switch (humanChoiceOrientation) {
+
+        String humanChoiceOrientation = null;
+        try {
+            while ((!Objects.equals(humanChoiceOrientation, "v")) && (!Objects.equals(humanChoiceOrientation, "V"))
+                    && (!Objects.equals(humanChoiceOrientation, "h")) && (!Objects.equals(humanChoiceOrientation, "H"))) {
+
+                humanChoiceOrientation = bufferedReader.readLine().trim();
+
+                if ((!Objects.equals(humanChoiceOrientation, "v")) && (!Objects.equals(humanChoiceOrientation, "V"))
+                        && (!Objects.equals(humanChoiceOrientation, "h")) && (!Objects.equals(humanChoiceOrientation, "H"))) {
+                    System.out.println("Choose correct orientation.");
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Error: Menu.getOrientation()");
+        }
+
+        switch (Objects.requireNonNull(humanChoiceOrientation)) {
             case ("V"), ("v") -> {
                 return VERTICAL_SHIP_ORIENTATION;
             }
@@ -64,16 +87,71 @@ public class Menu {
     }
 
 
-    static int getCoordinate_X() throws IOException {
+    static int getCoordinate_X() {
         System.out.print("X = ");
-        return Integer.parseInt(bufferedReader.readLine()) - 1;
+
+        String x = null;
+        try {
+            while ((!Objects.equals(x, "1")) && (!Objects.equals(x, "2"))
+                    && (!Objects.equals(x, "3")) && (!Objects.equals(x, "4"))
+                    && (!Objects.equals(x, "5")) && (!Objects.equals(x, "6"))
+                    && (!Objects.equals(x, "7")) && (!Objects.equals(x, "8"))
+                    && (!Objects.equals(x, "9")) && (!Objects.equals(x, "10"))) {
+
+                x = bufferedReader.readLine().trim();
+
+                if ((!Objects.equals(x, "1")) && (!Objects.equals(x, "2"))
+                        && (!Objects.equals(x, "3")) && (!Objects.equals(x, "4"))
+                        && (!Objects.equals(x, "5")) && (!Objects.equals(x, "6"))
+                        && (!Objects.equals(x, "7")) && (!Objects.equals(x, "8"))
+                        && (!Objects.equals(x, "9")) && (!Objects.equals(x, "10"))) {
+                    System.out.println("Choose correct coordinate X");
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Error: Menu.getCoordinate_X()");
+        }
+
+        return Integer.parseInt(Objects.requireNonNull(x)) - 1;
     }
 
 
-    static int getCoordinate_Y() throws IOException {
+    static int getCoordinate_Y() {
         System.out.print("Y = ");
-        String strHumanChoiceY = bufferedReader.readLine();
-        switch (strHumanChoiceY) {
+
+        String y = null;
+        try {
+            while ((!Objects.equals(y, "A")) && (!Objects.equals(y, "a"))
+                    && (!Objects.equals(y, "B")) && (!Objects.equals(y, "b"))
+                    && (!Objects.equals(y, "C")) && (!Objects.equals(y, "c"))
+                    && (!Objects.equals(y, "D")) && (!Objects.equals(y, "d"))
+                    && (!Objects.equals(y, "E")) && (!Objects.equals(y, "e"))
+                    && (!Objects.equals(y, "F")) && (!Objects.equals(y, "f"))
+                    && (!Objects.equals(y, "G")) && (!Objects.equals(y, "g"))
+                    && (!Objects.equals(y, "H")) && (!Objects.equals(y, "h"))
+                    && (!Objects.equals(y, "I")) && (!Objects.equals(y, "i"))
+                    && (!Objects.equals(y, "J")) && (!Objects.equals(y, "j"))) {
+
+        y = bufferedReader.readLine().trim();
+
+                if ((!Objects.equals(y, "A")) && (!Objects.equals(y, "a"))
+                        && (!Objects.equals(y, "B")) && (!Objects.equals(y, "b"))
+                        && (!Objects.equals(y, "C")) && (!Objects.equals(y, "c"))
+                        && (!Objects.equals(y, "D")) && (!Objects.equals(y, "d"))
+                        && (!Objects.equals(y, "E")) && (!Objects.equals(y, "e"))
+                        && (!Objects.equals(y, "F")) && (!Objects.equals(y, "f"))
+                        && (!Objects.equals(y, "G")) && (!Objects.equals(y, "g"))
+                        && (!Objects.equals(y, "H")) && (!Objects.equals(y, "h"))
+                        && (!Objects.equals(y, "I")) && (!Objects.equals(y, "i"))
+                        && (!Objects.equals(y, "J")) && (!Objects.equals(y, "j"))) {
+                    System.out.println("Choose correct coordinate Y");
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Error: Menu.getCoordinate_Y()");
+        }
+
+        switch (Objects.requireNonNull(y)) {
             case ("A"), ("a") -> {
                 return 0;
             }
@@ -106,7 +184,7 @@ public class Menu {
             }
             default -> {
                 System.out.println("Unexpected value. Please, enter valid Y coordinate from A to J.");
-                throw new IllegalStateException("Unexpected value: " + strHumanChoiceY);
+                throw new IllegalStateException("Unexpected value: " + y);
             }
         }
     }
@@ -114,12 +192,7 @@ public class Menu {
 
     public static void placingRulesMessage() {
         System.out.println("For placing a ship enter it orientation (V for vertical, H for horizontal) " +
-                "and coordinates (X - from 1 to 10, Y - from A to J).");
-    }
-
-
-    public static void currentOpponentGrid() {
-        System.out.println("This is a current opponent's grid. \nTake your shot.");
+                "\nand coordinates (X - from 1 to 10, Y - from A to J).");
     }
 
 

@@ -99,16 +99,6 @@ public class Ship {
     }
 
 
-    public void setBorders(int x, int y, String[][] grid) {
-        int[] offset_X = {-1, 1, -1, 1};
-        int[] offset_Y = {-1, -1, 1, 1};
-        for (int i = 0; i < 4; i++) {
-//            borders.add(new Border(x - offset_X[i], y - offset_Y[i]));
-            grid[x - offset_X[i]][y - offset_Y[i]] = Grid.MISS_SHOT;
-        }
-    }
-
-
     public boolean isHit(int x, int y) {
         for (Deck deck : decks) {
             if ((x == deck.getX_DeckCoordinate()) && (y == deck.getY_DeckCoordinate())) {

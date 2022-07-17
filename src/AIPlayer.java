@@ -56,8 +56,6 @@ public class AIPlayer extends Player {
             if (direction == -1) {
                 firstSuccessShot = previousShotCoordinates.clone();
                 direction = (int) (Math.random() * 4);
-                // Эта строка для тестирования и вывода информации в консоль. Её нужно убрать.
-//                System.out.println("direction = " + direction);
             }
         }
 
@@ -69,7 +67,7 @@ public class AIPlayer extends Player {
             aiShotCoordinates[1] = previousShotCoordinates[1] + offset_Y[direction];
         }
 
-        if (!grid.isPossibleToShoot(aiShotCoordinates[0], aiShotCoordinates[1])){
+        if (!grid.isPossibleToShoot(aiShotCoordinates[0], aiShotCoordinates[1])) {
             previousShotCoordinates = firstSuccessShot.clone();
             direction = -1;
             aiShotCoordinates[0] = -1;
@@ -78,7 +76,6 @@ public class AIPlayer extends Player {
         }
 
         previousShotCoordinates = aiShotCoordinates.clone();
-
 
         return aiShotCoordinates;
     }
